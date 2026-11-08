@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>김도윤 학업 포트폴리오</title>
+<meta name="description" content="설계한 것을 직접 만들어 보며 배우는 기계공학도 김도윤의 학업 포트폴리오 (교육용 샘플)">
+<meta property="og:title" content="김도윤 | 기계공학 학업 포트폴리오">
+<meta property="og:description" content="설계한 것을 직접 만들어 보며 배우는 기계공학도">
+<!-- 배포 후 내 주소로 바꿔서 주석을 풀어 주세요 (프롬프트 카드 11)
+<meta property="og:image" content="https://내-주소.vercel.app/images/og-image.jpg">
+<meta property="og:url" content="https://내-주소.vercel.app">
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* 레이아웃: 원페이지, 최대 1040px 중앙 컬럼. 섹션마다 제목 + 주색 짧은 밑줄. 프로젝트 카드 PC 3열 → 휴대폰 1열 */
+:root {
+  --primary: #1F4E9A;
+  --primary-soft: #E8EEF7;
+  --text: #222222;
+  --muted: #6B7280;
+  --line: #DDE2EA;
+  --bg: #FFFFFF;
+  --bg-alt: #F5F7FA;
+  --grid: #C9D4E5;
+  --on-primary: #FFFFFF;
+  --overlay: rgba(15, 23, 42, 0.55);
+  --font-body: "Noto Sans KR", "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+  --header-h: 60px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --primary: #7FA6E8; --primary-soft: #1C2A42; --text: #E6E9EF; --muted: #A0A8B6;
+    --line: #2E3644; --bg: #12161D; --bg-alt: #181D26; --grid: #2C3A52; --on-primary: #0E1420;
+    --overlay: rgba(0, 0, 0, 0.65); color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --primary: #7FA6E8; --primary-soft: #1C2A42; --text: #E6E9EF; --muted: #A0A8B6;
+  --line: #2E3644; --bg: #12161D; --bg-alt: #181D26; --grid: #2C3A52; --on-primary: #0E1420;
+  --overlay: rgba(0, 0, 0, 0.65); color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 12px); }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+body {
+  margin: 0; word-break: keep-all; background: var(--bg); color: var(--text);
+  font-family: var(--font-body); font-size: 16px; line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--bg); }
+a { color: var(--primary); }
+:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; border-radius: 4px; }
+.wrap {
+  max-width: 1040px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+/* ---------- header ---------- */
+.site-header {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  backdrop-filter: blur(8px); border-bottom: 1px solid var(--line);
+}
+.site-header .wrap { height: var(--header-h); display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.brand { font-weight: 700; color: var(--text); text-decoration: none; font-size: 17px; }
+.brand span { color: var(--muted); font-weight: 400; font-size: 14px; margin-left: 6px; }
+.nav { display: flex; gap: 22px; }
+.nav a { color: var(--muted); text-decoration: none; font-size: 15px; font-weight: 500; }
+.nav a:hover { color: var(--primary); }
+.menu-btn { display: none; background: none; border: 1px solid var(--line); border-radius: 6px; width: 40px; height: 40px; color: var(--text); font-size: 18px; cursor: pointer; }
+@media (max-width: 760px) {
+  .menu-btn { display: inline-flex; align-items: center; justify-content: center; }
+  .brand span { display: none; }
+  .nav { position: absolute; top: var(--header-h); left: 0; right: 0; flex-direction: column; gap: 0; background: var(--bg); border-bottom: 1px solid var(--line); padding: 4px max(16px, env(safe-area-inset-right, 0px)) 12px max(16px, env(safe-area-inset-left, 0px)); }
+  .nav a { padding: 10px 0; border-bottom: 1px solid var(--line); }
+  .nav:not(.open) { display: none; }
+}
+
+/* ---------- sections ---------- */
+section { padding-block: 72px; }
+section.alt { background: var(--bg-alt); }
+.sec-head { margin-bottom: 32px; }
+.sec-head h2 { font-size: 28px; line-height: 1.3; margin: 0; text-wrap: balance; }
+.sec-head h2::after { content: ""; display: block; width: 36px; height: 3px; background: var(--primary); margin-top: 12px; }
+.sec-head p { color: var(--muted); margin: 12px 0 0; max-width: 62ch; }
+
+/* ---------- hero ---------- */
+.hero { padding-block: 64px 56px; }
+.hero .wrap { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center; }
+.hero .eyebrow { color: var(--primary); font-weight: 700; font-size: 15px; letter-spacing: 0.02em; margin: 0 0 8px; }
+.hero h1 { font-size: clamp(32px, 5vw, 44px); line-height: 1.2; margin: 0 0 14px; }
+.hero .lead { font-size: 19px; margin: 0 0 20px; max-width: 34ch; word-break: keep-all; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 28px; padding: 0; list-style: none; }
+.chips li { font-size: 14px; padding: 4px 12px; border-radius: 999px; background: var(--primary-soft); color: var(--primary); font-weight: 500; }
+.btns { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn { display: inline-flex; align-items: center; gap: 6px; padding: 11px 20px; border-radius: 6px; font-weight: 700; font-size: 15px; text-decoration: none; border: 1px solid var(--primary); cursor: pointer; font-family: inherit; }
+.btn.primary { background: var(--primary); color: var(--on-primary); }
+.btn.ghost { background: transparent; color: var(--primary); }
+.photo { width: 180px; height: 180px; border-radius: 50%; border: 1px solid var(--line); background: var(--bg-alt); object-fit: cover; display: block; }
+@media (max-width: 640px) {
+  .hero .wrap { grid-template-columns: 1fr; }
+  .photo { width: 120px; height: 120px; order: -1; }
+}
+
+/* ---------- about ---------- */
+.about { display: grid; grid-template-columns: 300px 1fr; gap: 40px; }
+.about ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 12px; }
+.about li { padding-left: 14px; border-left: 3px solid var(--primary); font-weight: 500; }
+.about p { margin: 0; max-width: 62ch; }
+@media (max-width: 760px) { .about { grid-template-columns: 1fr; gap: 24px; } }
+
+/* ---------- courses ---------- */
+.courses { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+.course { background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 18px 20px; min-width: 0; }
+.course h3 { font-size: 17px; margin: 0 0 4px; }
+.course .when { font-family: var(--font-mono); font-size: 13px; color: var(--muted); }
+.course dl { margin: 10px 0 0; display: grid; grid-template-columns: auto 1fr; gap: 4px 10px; font-size: 15px; }
+.course dt { color: var(--primary); font-weight: 700; }
+.course dd { margin: 0; }
+
+.timeline-title { font-size: 18px; margin: 48px 0 18px; }
+.timeline { list-style: none; margin: 0; padding: 0; position: relative; }
+.timeline::before { content: ""; position: absolute; left: 70px; top: 6px; bottom: 6px; width: 2px; background: var(--line); }
+.timeline li { display: grid; grid-template-columns: 70px 1fr; gap: 24px; padding: 0 0 22px; position: relative; }
+.timeline li::after { content: ""; position: absolute; left: 65px; top: 7px; width: 12px; height: 12px; border-radius: 50%; background: var(--bg); border: 2px solid var(--primary); }
+.timeline li.key::after { background: var(--primary); }
+.timeline .sem { font-family: var(--font-mono); font-size: 14px; color: var(--muted); padding-top: 1px; }
+.timeline .ev { padding-left: 4px; min-width: 0; }
+.timeline .ev strong { display: block; }
+.timeline .ev span { color: var(--muted); font-size: 15px; }
+
+/* ---------- projects ---------- */
+.projects { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+@media (max-width: 900px) { .projects { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .projects { grid-template-columns: 1fr; } }
+.card { display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: var(--bg); min-width: 0; }
+.thumb { display: block; width: 100%; max-width: 100%; aspect-ratio: 16 / 10; object-fit: cover; background: var(--bg-alt); border-bottom: 1px solid var(--line); }
+.card-body { padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.card h3 { font-size: 18px; margin: 0; }
+.meta { font-size: 14px; color: var(--muted); margin: 0; }
+.role { margin: 0; font-size: 15px; flex: 1; }
+.card-actions { display: flex; gap: 14px; align-items: center; margin-top: 6px; }
+.card-actions .btn { padding: 8px 14px; font-size: 14px; }
+.link-btn { background: none; border: 0; padding: 0; color: var(--primary); font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+
+/* ---------- skills ---------- */
+.skills { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+@media (max-width: 860px) { .skills { grid-template-columns: 1fr; gap: 20px; } }
+.skill-group h3 { font-size: 16px; margin: 0 0 10px; padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+.skill-group ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.skill-group li strong { display: block; font-size: 16px; }
+.skill-group li span { font-size: 14px; color: var(--muted); }
+
+/* ---------- faq ---------- */
+.faq { border-top: 1px solid var(--line); max-width: 780px; }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq summary { list-style: none; cursor: pointer; padding: 18px 40px 18px 4px; font-weight: 700; position: relative; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; position: absolute; right: 8px; top: 50%; transform: translateY(-50%); font-size: 22px; font-weight: 400; color: var(--primary); }
+.faq details[open] summary::after { content: "−"; }
+.faq .ans { padding: 0 4px 20px; color: var(--text); max-width: 64ch; }
+.faq .ans p { margin: 0; }
+
+/* ---------- contact ---------- */
+.contact { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; max-width: 780px; }
+@media (max-width: 600px) { .contact { grid-template-columns: 1fr; } }
+.contact-item { border: 1px solid var(--line); border-radius: 8px; padding: 18px 20px; background: var(--bg); min-width: 0; }
+.contact-item .label { font-size: 13px; color: var(--muted); font-weight: 700; letter-spacing: 0.04em; }
+.contact-item .value { font-family: var(--font-mono); font-size: 15px; margin: 4px 0 10px; overflow-wrap: anywhere; user-select: all; }
+
+footer { border-top: 1px solid var(--line); padding-block: 28px; color: var(--muted); font-size: 14px; }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; }
+
+/* ---------- modal ---------- */
+.modal { position: fixed; inset: 0; z-index: 50; background: var(--overlay); display: grid; place-items: center; padding: 24px; }
+.modal-panel { background: var(--bg); color: var(--text); width: min(720px, 100%); max-height: 88vh; overflow: auto; border-radius: 10px; padding: 28px 28px 24px; position: relative; }
+.modal-panel h3 { margin: 0 40px 4px 0; font-size: 22px; }
+.close { position: absolute; top: 14px; right: 14px; width: 38px; height: 38px; border-radius: 6px; border: 1px solid var(--line); background: var(--bg); color: var(--text); font-size: 20px; cursor: pointer; }
+.detail { margin: 18px 0 0; display: grid; grid-template-columns: 124px 1fr; border-top: 1px solid var(--line); }
+.detail dt, .detail dd { padding: 11px 0; border-bottom: 1px solid var(--line); margin: 0; }
+.detail dt { font-weight: 700; color: var(--primary); font-size: 15px; }
+.tools { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; padding: 0; list-style: none; }
+.tools li { font-size: 13px; border: 1px solid var(--line); border-radius: 999px; padding: 2px 10px; color: var(--muted); }
+@media (max-width: 600px) {
+  .modal { padding: 0; place-items: stretch; }
+  .modal-panel { max-height: none; height: 100%; border-radius: 0; padding: calc(24px + env(safe-area-inset-top, 0px)) max(20px, env(safe-area-inset-right, 0px)) calc(24px + env(safe-area-inset-bottom, 0px)) max(20px, env(safe-area-inset-left, 0px)); }
+  .close { top: calc(12px + env(safe-area-inset-top, 0px)); right: max(12px, env(safe-area-inset-right, 0px)); }
+  .detail { grid-template-columns: 1fr; }
+  .detail dt { padding-bottom: 0; border-bottom: 0; }
+}
+
+/* ---------- top button, toast ---------- */
+.to-top { position: fixed; right: calc(20px + env(safe-area-inset-right, 0px)); bottom: calc(20px + env(safe-area-inset-bottom, 0px)); z-index: 15; width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--line); background: var(--bg); color: var(--primary); font-size: 20px; cursor: pointer; box-shadow: 0 4px 14px rgba(0,0,0,0.12); transition: opacity .2s; }
+.to-top.hide { opacity: 0; pointer-events: none; }
+.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(24px + env(safe-area-inset-bottom, 0px)); z-index: 60; background: var(--text); color: var(--bg); padding: 10px 16px; border-radius: 6px; font-size: 14px; max-width: calc(100% - 32px); }
+.sample-note { background: var(--primary-soft); color: var(--primary); font-size: 14px; text-align: center; padding-block: 8px; }
+</style>
+</head>
+<body>
+
+
+<div class="sample-note"><div class="wrap">교육용 샘플 페이지입니다. 인물과 내용은 모두 가상입니다.</div></div>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="#top">김도윤<span>기계공학 학업 포트폴리오</span></a>
+    <button class="menu-btn" id="menuBtn" aria-label="메뉴 열기" aria-expanded="false" aria-controls="nav">☰</button>
+    <nav class="nav" id="nav">
+      <a href="#about">소개</a>
+      <a href="#study">전공·학업</a>
+      <a href="#projects">프로젝트</a>
+      <a href="#skills">역량</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">연락처</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <!-- 첫 화면 -->
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">경상국립대학교 기계공학과 3학년</p>
+        <h1>김도윤</h1>
+        <p class="lead">설계한 것을 직접 만들어 보며 배우는 기계공학도</p>
+        <ul class="chips">
+          <li>기구 설계</li><li>시제품 제작</li><li>꼼꼼한 기록</li>
+        </ul>
+        <div class="btns">
+          <a class="btn primary" href="#projects">대표 프로젝트 보기</a>
+          <a class="btn ghost" href="#contact">연락처</a>
+        </div>
+      </div>
+      <img class="photo" src="images/profile.jpg" alt="김도윤 프로필 사진">
+    </div>
+  </section>
+
+  <!-- 소개 -->
+  <section class="alt" id="about">
+    <div class="wrap">
+      <div class="sec-head"><h2>소개</h2></div>
+      <div class="about">
+        <ul>
+          <li>기구 설계와 시제품 제작을 좋아하는 기계공학과 3학년</li>
+          <li>캡스톤에서 자동 급수 화분의 기구 설계 담당</li>
+          <li>도면과 실험 기록을 꼼꼼하게 남기는 습관</li>
+        </ul>
+        <p>설계한 것을 직접 만들어 보며 배우는 기계공학도입니다. 캡스톤디자인에서 자동 급수 화분의 본체를 설계하면서, 시제품에서 생긴 누수 문제를 연결부 구조를 바꿔 가며 세 차례 다시 출력해 해결했습니다. 실험과 설계 과정을 기록으로 남겨 팀이 같은 실수를 반복하지 않게 하는 것을 중요하게 생각합니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 전공·학업 -->
+  <section id="study">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>전공·학업</h2>
+        <p>과목마다 무엇을 배웠고, 그 지식으로 무엇을 만들어 봤는지 정리했습니다.</p>
+      </div>
+      <div class="courses">
+        <article class="course">
+          <h3>기계요소설계</h3><div class="when">3-1</div>
+          <dl><dt>배운 것</dt><dd>체결 요소, 공차와 끼워맞춤</dd><dt>만든 것</dt><dd>스마트 화분 연결부 설계에 적용</dd></dl>
+        </article>
+        <article class="course">
+          <h3>CAD 실습</h3><div class="when">2-2</div>
+          <dl><dt>배운 것</dt><dd>3D 모델링, 조립도와 부품도 작성</dd><dt>만든 것</dt><dd>공모전 독서대 모델링</dd></dl>
+        </article>
+        <article class="course">
+          <h3>열전달</h3><div class="when">2-2</div>
+          <dl><dt>배운 것</dt><dd>전도·대류, 열교환기 해석</dd><dt>만든 것</dt><dd>열교환기 효율 비교 보고서</dd></dl>
+        </article>
+        <article class="course">
+          <h3>유체역학</h3><div class="when">2-1</div>
+          <dl><dt>배운 것</dt><dd>관로 유동, 압력 손실</dd><dt>만든 것</dt><dd>유체 실험 보고서의 데이터 정리</dd></dl>
+        </article>
+        <article class="course">
+          <h3>메카트로닉스</h3><div class="when">3-1</div>
+          <dl><dt>배운 것</dt><dd>센서와 구동기, 마이크로컨트롤러 기초</dd><dt>만든 것</dt><dd>화분 수분 센서 연동 테스트</dd></dl>
+        </article>
+        <article class="course">
+          <h3>공학설계입문</h3><div class="when">1-2</div>
+          <dl><dt>배운 것</dt><dd>문제 정의, 아이디어 발상과 평가</dd><dt>만든 것</dt><dd>팀 설계안 조사·발표</dd></dl>
+        </article>
+      </div>
+
+      <h3 class="timeline-title">학기별 활동</h3>
+      <ol class="timeline">
+        <li><div class="sem">1-2</div><div class="ev"><strong>공학설계입문 팀 과제</strong><span>자료 조사와 발표 담당</span></div></li>
+        <li><div class="sem">2-1</div><div class="ev"><strong>유체역학 실험 보고서</strong><span>실험 데이터 정리와 그래프 작성</span></div></li>
+        <li class="key"><div class="sem">2-2</div><div class="ev"><strong>열교환기 효율 비교 보고서</strong><span>계산 전체와 결론 작성</span></div></li>
+        <li class="key"><div class="sem">3-1</div><div class="ev"><strong>교내 창의설계 공모전 출품</strong><span>아이디어 스케치와 3D 모델링</span></div></li>
+        <li class="key"><div class="sem">3-1</div><div class="ev"><strong>캡스톤디자인 자동 급수 스마트 화분</strong><span>기구 설계와 물탱크 배치 담당</span></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 대표 프로젝트 -->
+  <section class="alt" id="projects">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>대표 프로젝트</h2>
+        <p>근거 자료가 남아 있고 제 역할을 분명히 설명할 수 있는 세 가지를 골랐습니다.</p>
+      </div>
+      <div class="projects">
+        <article class="card">
+          <img class="thumb" src="images/capstone-planter-01.jpg" alt="자동 급수 스마트 화분 시제품 구조도">
+          <div class="card-body">
+            <h3>자동 급수 스마트 화분</h3>
+            <p class="meta">2026년 1학기 · 캡스톤디자인 · 4인 팀</p>
+            <p class="role">기구 설계와 물탱크 배치를 맡아, 시제품의 누수 문제를 연결부 구조 변경으로 해결</p>
+            <div class="card-actions">
+              <button class="btn primary" data-open="planter">자세히 보기</button>
+              <a class="link-btn" href="files/capstone-drawing.pdf" target="_blank" rel="noopener">도면 PDF</a>
+            </div>
+          </div>
+        </article>
+        <article class="card">
+          <img class="thumb" src="images/heat-exchanger-graph.png" alt="평행류와 대향류 효율 비교 그래프">
+          <div class="card-body">
+            <h3>열교환기 효율 비교 보고서</h3>
+            <p class="meta">2025년 2학기 · 열전달 · 3인 팀</p>
+            <p class="role">평행류와 대향류 실험 데이터를 계산하고, 이론값과 차이가 난 이유를 결론으로 정리</p>
+            <div class="card-actions">
+              <button class="btn primary" data-open="heat">자세히 보기</button>
+              <a class="link-btn" href="files/heat-exchanger-report.pdf" target="_blank" rel="noopener">보고서 PDF</a>
+            </div>
+          </div>
+        </article>
+        <article class="card">
+          <img class="thumb" src="images/reading-stand-model.jpg" alt="휴대용 독서대 3D 모델링 이미지">
+          <div class="card-body">
+            <h3>한 손으로 접는 휴대용 독서대</h3>
+            <p class="meta">2026년 1학기 · 교내 창의설계 공모전 · 2인 팀</p>
+            <p class="role">아이디어 스케치와 SolidWorks 모델링을 맡아 접이식 힌지 구조를 설계</p>
+            <div class="card-actions">
+              <button class="btn primary" data-open="stand">자세히 보기</button>
+              <a class="link-btn" href="images/reading-stand-model.jpg" target="_blank" rel="noopener">모델링 이미지</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 역량 -->
+  <section id="skills">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>역량</h2>
+        <p>실제로 사용해 본 도구만, 어떤 과제에서 썼는지와 함께 적었습니다.</p>
+      </div>
+      <div class="skills">
+        <div class="skill-group">
+          <h3>설계</h3>
+          <ul>
+            <li><strong>SolidWorks</strong><span>스마트 화분 본체, 공모전 독서대 모델링</span></li>
+            <li><strong>AutoCAD</strong><span>CAD 실습 부품도·조립도 작성</span></li>
+            <li><strong>공차 검토</strong><span>화분 연결부 재설계 과정에서 적용</span></li>
+          </ul>
+        </div>
+        <div class="skill-group">
+          <h3>제작·제어</h3>
+          <ul>
+            <li><strong>3D 프린팅</strong><span>화분 연결부 시제품 세 차례 출력</span></li>
+            <li><strong>아두이노 기초</strong><span>수분 센서 값 읽기와 펌프 작동 테스트</span></li>
+            <li><strong>조립·시험</strong><span>누수 확인을 위한 담수 시험 진행</span></li>
+          </ul>
+        </div>
+        <div class="skill-group">
+          <h3>데이터·문서</h3>
+          <ul>
+            <li><strong>Excel</strong><span>열교환기 실험 데이터 계산과 그래프</span></li>
+            <li><strong>보고서 작성</strong><span>실험 보고서, 캡스톤 최종 보고서</span></li>
+            <li><strong>회의록 정리</strong><span>캡스톤 주간 회의록 작성 담당</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="alt" id="faq">
+    <div class="wrap">
+      <div class="sec-head"><h2>자주 묻는 질문</h2></div>
+      <div class="faq">
+        <details>
+          <summary>기계공학을 전공으로 선택한 이유는 무엇인가요?</summary>
+          <div class="ans"><p>고등학교 때 고장 난 선풍기를 분해해 고쳐 본 뒤, 움직이는 구조를 직접 설계해 보고 싶어 기계공학을 선택했습니다. 지금은 설계와 시제품 제작을 함께 하는 과목에서 가장 많이 배우고 있습니다.</p></div>
+        </details>
+        <details>
+          <summary>가장 어려웠던 프로젝트와 해결 과정은?</summary>
+          <div class="ans"><p>캡스톤 스마트 화분에서 물탱크와 본체 연결부에 물이 새는 문제가 가장 어려웠습니다. 물을 채워 하루 동안 두는 방식으로 누수 위치를 찾았고, 연결부를 패킹을 끼우는 구조로 바꿔 세 차례 다시 출력하며 해결했습니다.</p></div>
+        </details>
+        <details>
+          <summary>팀 프로젝트에서 주로 어떤 역할을 맡나요?</summary>
+          <div class="ans"><p>설계 담당과 기록 담당을 함께 맡는 경우가 많았습니다. 캡스톤에서는 기구 설계와 함께 주간 회의록을 정리해, 일정이 늦어질 것 같은 부분을 팀에 미리 알렸습니다.</p></div>
+        </details>
+        <details>
+          <summary>실제로 다룰 수 있는 도구는 무엇인가요?</summary>
+          <div class="ans"><p>SolidWorks로 부품 모델링과 조립을 할 수 있고, 3D 프린터로 시제품을 출력해 본 경험이 있습니다. 실험 데이터는 Excel로 정리합니다. 아두이노는 센서 값을 읽고 간단한 구동을 테스트하는 수준입니다.</p></div>
+        </details>
+        <details>
+          <summary>졸업 후 어떤 분야로 가고 싶나요?</summary>
+          <div class="ans"><p>제품의 기구를 설계하고 시제품으로 검증하는 기구 설계 엔지니어를 목표로 하고 있습니다. 이를 위해 이번 학기에는 공차 해석과 사출 성형 설계 기준을 공부하고 있습니다.</p></div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- 연락처 -->
+  <section id="contact">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>연락처</h2>
+        <p>프로젝트나 인턴십 관련 문의는 이메일로 연락 주세요.</p>
+      </div>
+      <div class="contact">
+        <div class="contact-item">
+          <div class="label">이메일</div>
+          <div class="value" id="emailText">doyun.portfolio@example.com</div>
+          <button class="link-btn" id="copyEmail">주소 복사</button>
+        </div>
+        <div class="contact-item">
+          <div class="label">GitHub</div>
+          <div class="value">github.com/doyun-sample</div>
+          <button class="link-btn" data-sample>GitHub 열기</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 김도윤</span>
+    <span>교육용 샘플 · 인물과 내용은 가상입니다</span>
+  </div>
+</footer>
+
+<button class="to-top hide" id="toTop" aria-label="맨 위로">↑</button>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle" hidden>
+  <div class="modal-panel">
+    <button class="close" id="mClose" aria-label="닫기">×</button>
+    <h3 id="mTitle"></h3>
+    <p class="meta" id="mMeta"></p>
+    <dl class="detail" id="mDetail"></dl>
+    <ul class="tools" id="mTools"></ul>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+(function () {
+  const projects = {
+    planter: {
+      title: '자동 급수 스마트 화분',
+      meta: '2026년 1학기 · 캡스톤디자인 · 4인 팀',
+      rows: [
+        ['배경', '물 주기를 자주 잊는 1인 가구를 위한 자동 급수 화분을 한 학기 동안 제작했습니다.'],
+        ['내 역할', '본체 기구 설계, 물탱크 위치와 연결 구조 설계'],
+        ['과정과 어려움', '1차 시제품에서 물탱크와 본체 연결부에 누수가 발생했습니다. 물을 채워 하루 동안 두고 바닥을 확인하는 방식으로 위치를 찾았습니다.'],
+        ['해결', '연결부를 패킹을 끼우는 구조로 바꾸고, 세 차례 다시 출력해 시험했습니다.'],
+        ['결과', '학과 캡스톤 발표회에서 시연을 마쳤습니다. 최종 도면과 시연 영상을 함께 공개합니다.'],
+        ['배운 점', '시제품을 만들기 전에 조립 공차를 먼저 검토해야 수정 횟수가 줄어든다는 것을 배웠습니다.'],
+      ],
+      tools: ['SolidWorks', '3D 프린팅', '아두이노', '회의록'],
+    },
+    heat: {
+      title: '열교환기 효율 비교 보고서',
+      meta: '2025년 2학기 · 열전달 · 3인 팀',
+      rows: [
+        ['배경', '열전달 수업에서 이중관 열교환기의 평행류와 대향류 조건을 비교하는 실험 보고서를 작성했습니다.'],
+        ['내 역할', '측정 데이터 계산 전체와 결론 작성'],
+        ['과정과 어려움', '일부 측정값이 이론값과 차이가 커서, 계산 실수인지 측정 문제인지 구분해야 했습니다.'],
+        ['해결', '계산을 Excel 수식으로 다시 정리해 검산하고, 차이가 나는 원인으로 단열 상태와 온도 측정 위치를 결론에 정리했습니다.'],
+        ['결과', '두 유동 조건의 효율 차이와 그 이유를 이론과 연결해 설명한 보고서를 제출했습니다.'],
+        ['배운 점', '실험값이 이론과 다를 때, 숫자를 맞추기보다 차이의 원인을 근거와 함께 설명하는 것이 중요하다는 것을 배웠습니다.'],
+      ],
+      tools: ['Excel', '보고서 작성', '열전달 해석'],
+    },
+    stand: {
+      title: '한 손으로 접는 휴대용 독서대',
+      meta: '2026년 1학기 · 교내 창의설계 공모전 · 2인 팀',
+      rows: [
+        ['배경', '도서관과 카페에서 쓰기 좋은, 한 손으로 펴고 접을 수 있는 휴대용 독서대를 제안했습니다.'],
+        ['내 역할', '아이디어 스케치, SolidWorks 3D 모델링, 접이식 힌지 구조 설계'],
+        ['과정과 어려움', '접었을 때 두께를 줄이면서도 펼쳤을 때 흔들리지 않는 각도 고정 방식을 찾는 것이 어려웠습니다.'],
+        ['해결', '세 가지 힌지 형태를 모델링해 비교하고, 단계별로 각도가 고정되는 구조를 선택했습니다.'],
+        ['결과', '모델링 이미지와 설계 설명서로 공모전에 출품했습니다.'],
+        ['배운 점', '힌지의 내구성을 실제 시제품으로 시험하지 못한 점을 다음 보완 과제로 정리했습니다.'],
+      ],
+      tools: ['SolidWorks', '아이디어 스케치', '설계 설명서'],
+    },
+  };
+
+  const $ = (id) => document.getElementById(id);
+  const modal = $('modal');
+  let lastFocus = null;
+
+  function openProject(key) {
+    const p = projects[key];
+    if (!p) return;
+    $('mTitle').textContent = p.title;
+    $('mMeta').textContent = p.meta;
+    const dl = $('mDetail');
+    dl.innerHTML = '';
+    p.rows.forEach(([k, v]) => {
+      const dt = document.createElement('dt'); dt.textContent = k;
+      const dd = document.createElement('dd'); dd.textContent = v;
+      dl.append(dt, dd);
+    });
+    const ul = $('mTools');
+    ul.innerHTML = '';
+    p.tools.forEach((t) => { const li = document.createElement('li'); li.textContent = t; ul.append(li); });
+    lastFocus = document.activeElement;
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+    $('mClose').focus();
+  }
+  function closeModal() {
+    modal.hidden = true;
+    document.body.style.overflow = '';
+    if (lastFocus) lastFocus.focus();
+  }
+  document.querySelectorAll('[data-open]').forEach((b) => b.addEventListener('click', () => openProject(b.dataset.open)));
+  $('mClose').addEventListener('click', closeModal);
+  modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modal.hidden) closeModal(); });
+
+  // 모바일 메뉴
+  const nav = $('nav'), menuBtn = $('menuBtn');
+  menuBtn.addEventListener('click', () => {
+    const open = nav.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', String(open));
+    menuBtn.textContent = open ? '×' : '☰';
+  });
+  nav.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => {
+    nav.classList.remove('open'); menuBtn.setAttribute('aria-expanded', 'false'); menuBtn.textContent = '☰';
+  }));
+
+  // 토스트
+  let tTimer;
+  function toast(msg) {
+    const t = $('toast');
+    t.textContent = msg; t.hidden = false;
+    clearTimeout(tTimer); tTimer = setTimeout(() => { t.hidden = true; }, 2400);
+  }
+  document.querySelectorAll('[data-sample]').forEach((b) => b.addEventListener('click', () => toast('샘플 계정이라 GitHub 주소가 연결되어 있지 않습니다. 실제 사이트에서는 본인 GitHub 주소를 넣습니다.')));
+
+  // 이메일 복사
+  $('copyEmail').addEventListener('click', () => {
+    const text = $('emailText').textContent.trim();
+    const fallback = () => {
+      const r = document.createRange(); r.selectNodeContents($('emailText'));
+      const s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      toast('주소를 선택했습니다. 복사해서 사용하세요.');
+    };
+    try {
+      navigator.clipboard.writeText(text).then(() => toast('이메일 주소를 복사했습니다.'), fallback);
+    } catch (e) { fallback(); }
+  });
+
+  // 맨 위로
+  const toTop = $('toTop');
+  const onScroll = () => toTop.classList.toggle('hide', window.scrollY < 500);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+  toTop.addEventListener('click', () => window.scrollTo({ top: 0 }));
+})();
+</script>
+
+</body>
+</html>
